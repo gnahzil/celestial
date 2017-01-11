@@ -1,25 +1,18 @@
-/*eslint-env node*/
-
-//------------------------------------------------------------------------------
-// node.js starter application for Bluemix
-//------------------------------------------------------------------------------
-
-// This application uses express as its web server
-// for more info, see: http://expressjs.com
-var express = require('express');
-
-// cfenv provides access to your Cloud Foundry environment
-// for more info, see: https://www.npmjs.com/package/cfenv
-var cfenv = require('cfenv');
-
-// create a new express server
-var app = express();
-
-// serve the files out of ./public as our main files
-app.use(express.static(__dirname + '/public'));
-
-// get the app environment from Cloud Foundry
-var appEnv = cfenv.getAppEnv();
+const Koa = require('koa');
+const session = require('koa-session');
+const convert = require('koa-convert');
+const flash = require('koa-flash-simple')
+const views = require('koa-views');
+const pkg = require('./package');
+const parseBody = require('koa-better-body');
+const path = require('path');
+const fs = require('fs');
+const log4js = require('koa-log4');
+const app = new Koa();
+const cfenv = require('cfenv');
+const appEnv = cfenv.getAppEnv();
+//设置静态文件目录
+app.use(convert(require('koa-static')('./public')));
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
