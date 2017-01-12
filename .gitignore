@@ -52,3 +52,5 @@ typings
 
 # img folder
 public/img
+
+.DS_Store
