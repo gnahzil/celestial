@@ -7,8 +7,8 @@ module.exports = function(app) {
     });
     app.use(router.routes());
 
-    app.use(require('./posts'));
-    app.use(require('./signin'));
-    app.use(require('./signup'));
-    app.use(require('./signout'));
+    //app.use(require('./posts'));
+    //app.use(require('./signin'));
+    //app.use(require('./signup'));
+    //app.use(require('./signout'));
 }
