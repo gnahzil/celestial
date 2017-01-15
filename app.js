@@ -71,6 +71,6 @@ app.on('error', async (err,ctx) => {
 });
 
 //启动server监听端口
-app.listen(3000);
+app.listen(3000,"0.0.0.0");
 console.log('Server start on port 3000...');
 
