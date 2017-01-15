@@ -10,7 +10,8 @@ const fs = require('fs');
 const log4js = require('koa-log4');
 const config = require('config-lite');
 const app = new Koa();
-
+const cfenv = require('cfenv');
+const appEnv = cfenv.getAppEnv();
 //初始化log4js设置配置文件
 log4js.configure('./config/log4js.json');
 var log = log4js.getLogger("app");//得倒log4j句柄
@@ -65,6 +66,8 @@ app.on('error', async (err,ctx) => {
 });
 
 //启动server监听端口
-app.listen(config.port);
-console.log('Server start on port ' + config.port + '...');
+app.listen(appEnv.port, '0.0.0.0', function() {
+  // print a message when the server starts listening
+  console.log("server starting on " + appEnv.url);
+});
 
