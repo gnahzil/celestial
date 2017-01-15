@@ -8,11 +8,12 @@ const parseBody = require('koa-better-body');
 const path = require('path');
 const fs = require('fs');
 const log4js = require('koa-log4');
+const config = require('config-lite');
 const app = new Koa();
 
 //初始化log4js设置配置文件
 log4js.configure('./config/log4js.json');
-var log = log4js.getLogger("index");//得倒log4j句柄
+var log = log4js.getLogger("app");//得倒log4j句柄
 
 //设置模板目录和引擎
 app.use(views(__dirname + '/views', {
@@ -25,15 +26,8 @@ app.use(views(__dirname + '/views', {
 app.use(convert(require('koa-static')('./public')));
 
 //设置session和flash通知
-app.keys=['ary blog'];
-var CONFIG = {
-  key: 'aryblog:sess', /** (string) cookie key (default is koa:sess) */
-  maxAge: 86400000, /** (number) maxAge in ms (default is 1 days) */
-  overwrite: true, /** (boolean) can overwrite or not (default true) */
-  httpOnly: true, /** (boolean) httpOnly or not (default true) */
-  signed: true, /** (boolean) signed or not (default true) */
-};
-app.use(convert(session(CONFIG,app)));
+app.keys=['celestial'];
+app.use(convert(session(config.session,app)));
 app.use(flash());
 
 //设置上传目录
@@ -71,6 +65,6 @@ app.on('error', async (err,ctx) => {
 });
 
 //启动server监听端口
-app.listen(3000);
-console.log('Server start on port 3000...');
+app.listen(config.port);
+console.log('Server start on port ' + config.port + '...');
 
